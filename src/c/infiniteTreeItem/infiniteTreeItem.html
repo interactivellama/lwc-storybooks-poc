@@ -1,0 +1,74 @@
+<template>
+    <template if:false={isRoot}>
+        <c-infinite-tree-header></c-infinite-tree-header>
+    </template>
+    <template if:true={isRoot}>
+        <template for:each={children} for:item="item" for:index="index">
+            <!-- branch -->
+            <template if:false={item.isLeaf}>
+                <c-infinite-tree-item
+                    key={item.name}
+                    label={item.label}
+                    items={item.items}
+                >
+                </c-infinite-tree-item>
+            </template>
+            <!-- item -->
+            <template if:true={item.isLeaf}>
+                <c-infinite-tree-item
+                    key={item.name}
+                    label={item.label}
+                    is-leaf={item.isLeaf}
+                >
+                </c-infinite-tree-item>
+            </template>
+        </template>
+    </template>
+    <!-- render leaf -->
+    <template if:false={isRoot}>
+        <!-- branch -->
+        <template if:false={isLeaf}>
+            <div class="slds-tabs-mobile__item">
+                <button class="slds-button slds-button_full-width">
+                    <span class="slds-truncate" title={label}>{label}</span>
+                    <c-primitive-icon
+                        if:true={showIcon}
+                        icon-name="utility:chevronright"
+                        size="x-small"
+                    ></c-primitive-icon>
+                </button>
+            </div>
+        </template>
+        <!-- item -->
+        <template if:true={isLeaf}>
+            <div class="slds-tabs-mobile__item">
+                <button class="slds-button slds-button_full-width">
+                    <span class="slds-truncate" title={label}>{label}</span>
+                </button>
+            </div>
+        </template>
+        <template for:each={children} for:item="item" for:index="index">
+            <!-- branch -->
+            <template if:false={item.isLeaf}>
+                <c-infinite-tree-item
+                    key={item.name}
+                    label={item.label}
+                    items={item.items}
+                >
+                </c-infinite-tree-item>
+            </template>
+            <!-- item -->
+            <template if:true={item.isLeaf}>
+                <c-infinite-tree-item
+                    key={item.name}
+                    label={item.label}
+                    is-leaf={item.isLeaf}
+                >
+                </c-infinite-tree-item>
+            </template>
+        </template>
+    </template>
+    <div
+        style="height: 10px; background-color: #000; margin-bottom: 10px;"
+    ></div>
+</template>
